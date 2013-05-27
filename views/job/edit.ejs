@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    
+    <!--css-->
+    <!--css-->
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/css/bootstrap-responsive.min.css' />
+  </head>
+  <body>
+    
+  <div class="container">
+      <% if( success ) { %>
+        <div class="alert alert-success"> <%=success%> </div>
+      <% } %>
+      <% if(error) { %>
+        <div class="alert alert-error"> <%=error%> </div>
+      <% } %> 
+
+      <h2>更新职位</h2>
+      <hr>
+      <form class="form-horizontal" action="/job/<%=job._id%>" method="post">
+                          
+                            <div class="control-group">
+                              <label class="control-label">职位标题</label>
+                              <div class="controls">
+                  <input type="text" class="input-block-level" name="title" 
+                  value="<%=job.title%>" required=true>
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">公司名称</label>
+                              <div class="controls">
+                                <input type="text" class="input-block-level" name="company"
+                                 value="<%=job.company%>" required=true>                                
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">招聘人数</label>
+                              <div class="controls">
+                                <input type="text" class="input-block-level" name="number" 
+                                value="<%=job.number%>" required=true>
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">招聘职位描述</label>
+                              <div class="controls">
+                                <input type="text" class="input-block-level" name="position" 
+                                value="<%=job.position%>" required=true>
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">需求详述</label>
+                              <div class="controls">
+                                <textarea class="input-xlarge" name="requirements" id="textarea" 
+                                rows="4" value="<%=job.requirements%>"> </textarea>
+                              </div>
+                            </div>
+                            <div class="form-actions">
+                                <input type="submit" name="submit" value="保存" class="btn btn-primary btn-large">
+                                <a class="btn" href="/job/<%=job._id%>">退出更新</a>
+                            </div>
+                        </form>
+
+    </div> <!-- /container -->
+
+    
+    
+  </body>
+</html>

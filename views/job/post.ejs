@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    
+    <!--css-->
+    <!--css-->
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/css/bootstrap-responsive.min.css' />
+  </head>
+  <body>
+    
+  <div class="container">
+      <% if( success ) { %>
+        <div class="alert alert-success"> <%=success%> </div>
+      <% } %>
+      <% if(error) { %>
+        <div class="alert alert-error"> <%=error%> </div>
+      <% } %> 
+
+      <h2>发布新职位</h2>
+      <hr>
+      <form class="form-horizontal" action="/job" method="post">
+                          
+                            <div class="control-group">
+                              <label class="control-label">职位标题</label>
+                              <div class="controls">
+                               <input type="text" class="input-block-level" name="title" placeholder="Noder" required=true>
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">公司名称</label>
+                              <div class="controls">
+                                <input type="text" class="input-block-level" name="company" placeholder="alibab" required=true>                                
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">招聘人数</label>
+                              <div class="controls">
+                                <input type="text" class="input-block-level" name="number" placeholder="1" required=true>
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">招聘职位描述</label>
+                              <div class="controls">
+                                <input type="text" class="input-block-level" name="position" placeholder="Noder" required=true>
+                              </div>
+                            </div>
+                            <div class="control-group">
+                              <label class="control-label">需求详述</label>
+                              <div class="controls">
+                                <textarea class="input-xlarge" name="requirements" id="textarea" rows="3" placeholder="requirements."></textarea>
+                              </div>
+                            </div>
+                            
+                           
+                            
+                            <div class="form-actions">
+                                <input type="submit" name="submit" value="保存" class="btn btn-primary btn-large">
+                            </div>
+                            
+                        </form>
+
+    </div> <!-- /container -->
+
+    
+    
+  </body>
+</html>

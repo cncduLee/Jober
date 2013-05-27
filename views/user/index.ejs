@@ -1,0 +1,19 @@
+<% if(error){ %>
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Warning!</h4>
+  <%=error %>
+</div>  
+<% } %>
+
+
+<div class="row">
+<% jobs.forEach(function(job,index){%>
+  <div class="span4">
+            <h2> <%=job.title %></h2>
+            <p> 发布于：<%=job.create_at %> </p>
+            <p> <%=job.requirements %> </p>    
+            <p><a class="btn" href="/job/ <%=job._id %> ">查看详情 &raquo;</a></p>
+  </div> 
+<% }) %>
+</div>

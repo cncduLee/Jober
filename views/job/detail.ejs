@@ -1,0 +1,27 @@
+
+<div class="hero-unit">
+  <h1> <%=job.title %> 
+  <small>
+  点击数：<span class="badge badge-info"><%=job.click_count %></span> ;&nbsp;&nbsp;&nbsp
+  申请次数： <span class="badge badge-info"><%=job.ask_count %></span>
+  </small>
+  </h1>
+  <h7>
+    <a href="/resume/post/<%=job._id%>">
+      <span class="badge badge-warning">申请该职位</span>
+    </a>
+  </h7>
+  <p> <%=job.position %> </p>
+  <p> <%=job.requirements %> </p>
+
+<hr class="divider">  
+
+<% if(user!=null && user._id == job.author_id){ %>
+  <a href="/job/edit/<%=job._id%>">
+    <span class="badge badge-warning">修改</span>
+  </a>
+  <a href="/job/remove/<%=job._id%>">
+    <span class="badge badge-warning">删除</span>
+  </a>
+<% } %>
+</div>
