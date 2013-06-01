@@ -5,18 +5,23 @@ var JobDao = require('../service').JobDao;
 exports.post = function(req, res){
 	//必须先登录
 	mustLogined(req,res);
+	
 	//发布新职位
 	  res.render('job/post', {
-	  	title: '发布职位-乐享'
+	  	title: '发布职位-乐享',
+	  	layout:'default'
 	  });
 };
 /*发表信息表单*/
-exports.doPost = function(req, res){
+exports.doPost = function(req, res,next){
+	
+	console.log('-----------');
 	//必须先登录
 	mustLogined(req,res);
+	var author_id = req.session.user._id;
 
 	JobDao.newAndSave(
-		req.session.user._id,
+		author_id,
 		req.body['title'],
 		req.body['company'],
 		req.body['position'],
@@ -109,13 +114,8 @@ exports.remove = function(req,res,next){
 //工具方法
 //+++++++++++++++++++++++++++
 
-/**如果已经登入了,就转到首页**/
-function checkLogin(req,res){
-	if(req.session.user)
-		return res.redirect('/');
-}
 
-/**如果已经登入了,就转到首页**/
+/**为登陆，强制转到登陆页**/
 function mustLogined(req,res){
 	if(!req.session.user)
 		return res.redirect('/login');

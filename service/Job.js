@@ -36,7 +36,7 @@ exports.getJobs = function(callback){
  * @param {Function} callback 回调函数
  */
 exports.getJobsByQuery = function (query, opt, callback){
-	Job.find(query, opt, callback);
+	Job.find(query,{}, opt, callback);
 };
 
 
@@ -53,6 +53,7 @@ exports.getJobsByQuery = function (query, opt, callback){
 exports.getCountByQuery = function (query, callback) {
   Job.count(query, callback);
 };
+
 
 /**
  * 点击数加 1

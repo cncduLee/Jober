@@ -8,9 +8,12 @@
   "dependencies": {
     "express": "3.2.5",
     "ejs": "*",
+    "xss":"0.0.5",
+    "crypto":"0.03",
     "express-partials": "*",
     "connect-flash":"0.1.1",
     "mongoose":"3.6.11",
-    "eventproxy":"0.2.3"
+    "eventproxy":"0.2.3",
+    "data2xml":"0.8.0"
   }
 }

@@ -1,7 +1,6 @@
 var UserDao = require('./service').UserDao;
 var JobDao = require('./service').JobDao;
-
-console.log('user test---!\n');
+var EventProxy = require('eventProxy');
 
 //++++++++++++++++++++++++++++++
 //==userdao测试
@@ -40,56 +39,54 @@ JobDao.getCountByQuery(query,function(err,count){
 */
 
 
+var events = ['a','b'];
+var proxy = new EventProxy();
+
+
+// EventProxy.create(events, function (list) {
+//   console.log('result=+++++++++++++'+list);
+// });
 
 UserDao.getUsersByQuery({},{},function(err,users){
- 	if(err)
- 		console.log('err!');
+ 	
+ 	proxy.after('a',users.length,function(list){
+ 		for(var a=0;a<list.length;a++)
+ 			console.log(a+':'+list[a].jobs);
+	});
 
+ 	var op = {sort: [ [ 'create_at', 'desc' ] ]};//一般是：{ limit: 5, sort: [ [ 'last_reply_at', 'desc' ] ]};
  	users.forEach(function(user,i){
-		/**
-		 * 根据关键词，获取job列表
-		 * Callback:
-		 * - err, 数据库错误
-		 * - jobs, 主题列表
-		 * @param {String} query 搜索关键词
-		 * @param {Object} opt 搜索选项
-		 * @param {Function} callback 回调函数
-		 */
-		var op = {sort: [ [ 'create_at', 'desc' ] ]};//一般是：{ limit: 5, sort: [ [ 'last_reply_at', 'desc' ] ]};
 		var q = {author_id:user._id};
 		JobDao.getJobsByQuery(q,op,function(err,jobs){
-			
 			if(err)
 				console.log('err');
-
-			if(jobs.length===0)
-				console.log('null collection!');
 			
-			console.log(jobs);
+			var muser = user;
+			muser.jobs = jobs;
+			proxy.emit('a',muser);
 
-			// var jobids = [];
-			// jobs.forEach(function( job , j ){
-			// 	console.log('j:'+job);
-			// 	jobids.push(job._id);
-			// });
-
-			// jobids.forEach(function(id,k){
-			// 	JobDao.getJobById(id,function(err,job){
-			// 		if(err)
-			// 			console.log('errr');
-			// 		console.log('@@----------job:'+job.title);
-			// 	});
+			// var ids = [];
+			// for(var a=0;a<jobs.length;a++){
+			// 	ids.push(jobs[a]._id);
+			// }
+			// var q2 = {author_id:user._id,_id:{'$in':ids}};
+			// JobDao.getJobsByQuery(q2,op,function(err,jjj){
+			// 	user.jjj = jjj;
+			// 	proxy.done('a',user);
 			// });
 		});
-
  	});
 
  });
 
-JobDao.remove('51a0b8b2d7886a8c1d000002',function(err,result){
-	console.log('err:'+err+"result:"+result);
-});
+// JobDao.remove('51a0b8b2d7886a8c1d000002',function(err,result){
+// 	console.log('err:'+err+"result:"+result);
+// });
 
-console.log('---!\n');
+// JobDao.getJobsByQuery({author_id:'51a08d799437412c12000001'},{sort: [ [ 'create_at', 'desc' ] ],limit: 5},function(err,jobs){
+// 	console.log(jobs);
+// });
+
+// console.log('---!\n');
 
 

@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    
-    <!--css-->
-    <!--css-->
-    <link rel='stylesheet' href='/css/style.css' />
-    <link rel='stylesheet' href='/css/bootstrap.min.css' />
-    <link rel='stylesheet' href='/css/bootstrap-responsive.min.css' />
-  </head>
-  <body>
-    
-  <div class="container">
-      <% if( success ) { %>
-        <div class="alert alert-success"> <%=success%> </div>
-      <% } %>
-      <% if(error) { %>
-        <div class="alert alert-error"> <%=error%> </div>
-      <% } %> 
+
+<div class="container">
 
       <h2>我要求职</h2>
       <hr>
@@ -30,18 +12,70 @@
 
               <div class="tab-content">
                 <div class="tab-pane active" id="onlineresume">
-                  <form class="form-horizontal" action="/resume/post" method="post">
+                  <form class="form-horizontal" action="/resume/post/on" method="post">
+                    <input type='hidden'  name='author_to' value='<%=author_to._id%>'></input> 
+                    <input type='hidden'  name='job_id' value='<%=job._id%>'></input> 
                   <div class="control-group">
-                              <label class="control-label">姓名</label>
-                              <div class="controls">
-                               <input type="text" class="input-block-level" name="title" placeholder="Noder" required=true>
-                              </div>
+                              <label class="control-label">收件人:</label>
+                              <div class="controls"><%=author_to.email%></div>
                   </div>
                   <div class="control-group">
-                              <label class="control-label">邮箱</label>
+                              <label class="control-label">求职邮件标题</label>
                               <div class="controls">
                                <input type="text" class="input-block-level" name="title" placeholder="Noder" required=true>
                              </div>
+                  </div>
+
+                  <div class="control-group">
+                              <label class="control-label">求职邮件正文</label>
+                              <div class="controls">
+                               <input type="text" class="input-block-level" name="content" placeholder="Noder" required=true>
+                             </div>
+                  </div>
+                  <hr>
+                  <p style="text-align:center">以下是你的简历。<a href="javascript:void(0)">修改简历</a></p>
+
+                  <div>
+                    <table align="left" cellspacing="0" class="t_resume" style="width: 100%;">
+                      <tbody>
+                      <tr>
+                       <th width="16%" valign="top">姓名:</th>
+                       <td width="55%" valign="top">
+                        <input type="text" class="input-block-level" name="name" />
+                        </td>
+                       </tr>
+                      <tr>
+                       <th width="16%" valign="top">邮箱:</th>
+                       <td width="55%" valign="top">
+                        <input type="text" class="input-block-level" name="email" />
+                      </td>
+                     </tr>
+                     <tr>
+                       <th width="16%" valign="top">电话号码:</th>
+                       <td width="55%" valign="top">
+                        <input type="text" class="input-block-level" name="phoneNo" />
+                      </td>
+                     </tr>
+                     <tr>
+                       <th width="16%" valign="top">工作年限:</th>
+                       <td width="55%" valign="top">
+                        <input type="text" class="input-block-level" name="work_years" />
+                      </td>
+                     </tr>
+                     <tr>
+                       <th width="16%" valign="top">工作经验:</th>
+                       <td width="55%" valign="top">
+                        <textarea rows='5' class="input-block-level" name="work_history" ></textarea>
+                      </td>
+                     </tr>
+                     <tr>
+                       <th width="16%" valign="top">学历:</th>
+                       <td width="55%" valign="top">
+                        <input type="text" class="input-block-level" name="edu_backend" />
+                      </td>
+                     </tr>
+                   </tbody>
+                     </table>
                   </div>
 
                   <hr>
@@ -50,25 +84,39 @@
                   </div>
                 </form>
                 </div>
+
                 <div class="tab-pane" id="resumefile">
-                  <form class="form-horizontal" action="/resume/post" method="post">
+                  <form class="form-horizontal" action="/resume/post/off" method="post" enctype='mutipart/form-data'>
+                   
+                   <input type='hidden'  name='author_to' value='<%=author_to._id%>'></input> 
+                   <input type='hidden'  name='job_id' value='<%=job._id%>'></input>
+                   
 
                   <div class="control-group">
-                              <label class="control-label">给简历取个标题</label>
-                              <div class="controls">
-                               <input type="text" class="input-block-level" name="title" placeholder="Noder" required=true>
-                              </div>
+                              <label class="control-label">收件人:</label>
+                              <div class="controls"><%=author_to.email%></div>
                   </div>
                   <div class="control-group">
-                              <label class="control-label">简历说明</label>
+                              <label class="control-label">邮件标题</label>
                               <div class="controls">
-                               <input type="text" class="input-block-level" name="title" placeholder="Noder" required=true>
-                              </div>
+                               <input type="text" class="input-block-level" name="title" required=true>
+                             </div>
                   </div>
+
                   <div class="control-group">
-                              <label class="control-label">简历附件</label>
+                              <label class="control-label">邮件正文</label>
                               <div class="controls">
-                                <a  href='#'>上传附件</a>
+                               <input type="text" class="input-block-level" name="content" required=true>
+                             </div>
+                  </div>
+
+                  <div class="control-group">
+                              <label class="control-label">附件</label>
+                              <div class="controls">
+                                <div id="doc_upload"></div>
+                                <div id="doc_choose_result"></div>
+                                <input type='hidden'  name='resume_file' value=''></input>
+                              </div>  
                   </div>
                   
                   <hr>
@@ -83,9 +131,38 @@
 
     </div> <!-- /container -->
 
-     <!--js-->
-    <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    
-  </body>
-</html>
+<link rel="stylesheet" type="text/css" href="/libs/fileupload/uploadify.css" />
+<script type="text/javascript" src="/libs/fileupload/jquery.uploadify-3.1.min.js"></script>    
+<SCRIPT TYPE="text/javascript">
+  $(function() {
+    $("#doc_upload").uploadify({
+      'swf'     : '/libs/fileupload/uploadify.swf',
+      'uploader'       : '/upload/file',
+      'cancelImg'     :'/libs/fileupload/uploadify-cancel.png',
+      'buttonText'    :'上传文件...',
+      'multi'         : false,
+      'auto'    : true,
+      'method'   : 'post',
+      'fileObjName':'doc_upload',
+      'formData': { user_action: 'upload_doc'},
+      'onSelect' :function(file){
+        $('#doc_choose_result').append('选择文件：'+file.name);
+      },
+      'onUploadSuccess' : function(file, data, response) {
+        if(response.status == 'success'){
+          $('#resume_file').val(response.url);
+        }
+        if(response.status == 'forbidden'){
+          alert('权限不够...');
+        }
+        if(response.status == 'failed'){
+          alert('出错原因：'+response.message);
+        }
+      },
+      'onUploadError' : function (event, queueID ,fileObj, errorObj){
+        alert('上传失败！');
+      }
+    });
+
+  });
+</SCRIPT>

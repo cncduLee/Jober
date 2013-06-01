@@ -1,70 +1,61 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
+<div class="main-body">
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'>发布新职位</span>
+    </div>
     
-    <!--css-->
-    <!--css-->
-    <link rel='stylesheet' href='/css/style.css' />
-    <link rel='stylesheet' href='/css/bootstrap.min.css' />
-    <link rel='stylesheet' href='/css/bootstrap-responsive.min.css' />
-  </head>
-  <body>
-    
-  <div class="container">
-      <% if( success ) { %>
-        <div class="alert alert-success"> <%=success%> </div>
-      <% } %>
-      <% if(error) { %>
-        <div class="alert alert-error"> <%=error%> </div>
-      <% } %> 
-
-      <h2>发布新职位</h2>
-      <hr>
-      <form class="form-horizontal" action="/job" method="post">
-                          
-                            <div class="control-group">
-                              <label class="control-label">职位标题</label>
+    <form id='create_article_form' action='/job/post' method='post'>
+      <div class='inner'>
+        
+                          <div class="control-group">
+                              <label class="control-label">标题</label>
                               <div class="controls">
-                               <input type="text" class="input-block-level" name="title" placeholder="Noder" required=true>
+                               <input type="text" class='span8' id='title' name='title' maxlength='100' style='width: 550px' placeholder="soft enginer" required=true>
                               </div>
                             </div>
                             <div class="control-group">
                               <label class="control-label">公司名称</label>
                               <div class="controls">
-                                <input type="text" class="input-block-level" name="company" placeholder="alibab" required=true>                                
+                                <input type="text" class="span8" maxlength='100' style='width: 550px' name="company" placeholder="alibab" required=true>                                
                               </div>
                             </div>
                             <div class="control-group">
                               <label class="control-label">招聘人数</label>
                               <div class="controls">
-                                <input type="text" class="input-block-level" name="number" placeholder="1" required=true>
+                                <input type="text" <input type="text" class="span8" maxlength='100' style='width: 550px'  name="number" placeholder="1" required=true>
                               </div>
                             </div>
                             <div class="control-group">
-                              <label class="control-label">招聘职位描述</label>
+                              <label class="control-label">招聘职位</label>
                               <div class="controls">
-                                <input type="text" class="input-block-level" name="position" placeholder="Noder" required=true>
+                                <input type="text" <input type="text" class="span8" maxlength='100' style='width: 550px'  name="position" placeholder="Noder" required=true>
                               </div>
                             </div>
-                            <div class="control-group">
-                              <label class="control-label">需求详述</label>
-                              <div class="controls">
-                                <textarea class="input-xlarge" name="requirements" id="textarea" rows="3" placeholder="requirements."></textarea>
-                              </div>
-                            </div>
-                            
-                           
-                            
-                            <div class="form-actions">
-                                <input type="submit" name="submit" value="保存" class="btn btn-primary btn-large">
-                            </div>
-                            
-                        </form>
 
-    </div> <!-- /container -->
+        <div class='sep10'></div>
+        <div class='sep10'></div>
+        <div>
+          <label class='bold' for='t_content'>职位需求详述:</label>
+          <div class='tabbable'>
+            <div class='input'>
+              <textarea id="editor" name='requirements' rows='20' style='width: 700px; height: auto;'>
+              </textarea>
+            </div>
+          </div>
+        </div>
 
-    
-    
-  </body>
-</html>
+        <div class='form-actions'>
+          <input type='submit' id='submit_btn' class='btn' value="发布" />
+        </div>
+
+        <script type='text/javascript'>
+                    window.UEDITOR_CONFIG.minFrameHeight = 300;
+                    var editor = new baidu.editor.ui.Editor();
+                    editor.render('editor');
+                </script>
+       
+      </div>
+    </form>
+  </div>
+</div>
+

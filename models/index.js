@@ -14,6 +14,7 @@ require('./Job');
 require('./Coment');
 require('./Message');
 require('./Resume');
+require('./Relation');
 //...
 
 exports.User = mongoose.model('User');
@@ -21,4 +22,5 @@ exports.Job = mongoose.model('Job');
 exports.Coment = mongoose.model('Coment');
 exports.Message = mongoose.model('Message');
 exports.Resume = mongoose.model('Resume');
+exports.Relation = mongoose.model('Relation');
 //...

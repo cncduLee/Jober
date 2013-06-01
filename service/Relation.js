@@ -11,7 +11,7 @@ exports.getRelation = function (userId, followId, callback) {
 };
 
 /**
- * 根据用户查找用户的偶像们
+ * 根据用户查找用户的偶像们【用户是follow】
  * @param {ID} followId 关注人的id
  */
 exports.getRelationsByUserId = function (followId, callback) {
@@ -19,7 +19,7 @@ exports.getRelationsByUserId = function (followId, callback) {
 };
 
 /**
- * 根据用户查找粉丝们
+ * 根据用户查找粉丝们【用户是user,被follow】
  * @param {ID} userId 被关注人的id
  */
 exports.getFollowings = function (userId, callback) {

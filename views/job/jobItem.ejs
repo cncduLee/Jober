@@ -1,0 +1,20 @@
+<div class='cell'>
+	<div class='user_avatar' style="margin-right:20px;">
+		<a href='/u/<%=job.author._id%>'><img width="48px" src='<%=job.author.avatar_url%>' title='<%=job.author.name%>' /></a>
+	</div>
+
+	<a> <%=job.title %></a>
+	<a class="count fr" href="/job/ <%=job._id %>"><%=job.click_count%></a>
+
+
+	<div class='sep10'></div>
+	<div class='sep5'></div>
+	
+	<span class='col_fade' style='color:#aaa;'>
+		<%=job.click_count %>点击&nbsp;&nbsp;
+        <%=job.coment_count %>回复 &nbsp;&nbsp;&nbsp;
+        <%=job.ask_count %>申请 &nbsp;&nbsp;&nbsp;
+	</span>
+	<div class="sep5"></div>
+    <a href="/job/ <%=job._id %> ">查看详情 &raquo;</a>
+</div>

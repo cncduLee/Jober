@@ -1,0 +1,57 @@
+
+<%
+var user_id;
+if(user){
+	user_id = user._id;
+}
+%>
+
+<div class="side_span">
+	<% if(user){%>
+	<div class='user_card' id='user_card'>
+		<div class='user_card_left'>
+			<h1><a href="#"></a></h1>
+			<p><a href="#">粉丝： <span>0</span>个</a></p>
+			<p><a href="#">关注： <span>0</span>人</a></p>
+		</div>
+		<div class='user_card_right'>
+			<%if(user.avatar_url && user.avatar_url!=""){%>
+				<a href="/u/<%=user_id%>" title="a" class="img x">
+				<img style="width:70px;" src="<%=user.avatar_url%>"></a>	
+			<%}else{%>
+				<a href="/u/<%=user_id%>" title="a" class="img x">
+				<img style="width:70px;" src="/img/avatar.png"></a>	
+			<%}%>
+		</div>
+	</div>
+	<div  class="operate">
+		<a href="/u/<%=user_id%>" class="btn btn-info"><i class="icon-home icon-white"></i> 进入主页</a>
+	</div>
+	
+	<%}else{%>
+		<div class='header'>
+			<span class='col_fade'>登录乐享使用更多功能</span>
+		</div>
+		<div class='inner textCenter'>
+			<a href="/login" class="btn btn-info"><i class="icon-user icon-white"></i> 登录</a>
+		</div>
+	<%}%>
+</div>
+
+<div class="side_span">
+	<div class='header'>
+		<span class='col_fade'>活跃用户</span>
+	</div>
+	<div class='inner' id='positive_usres'>
+		
+	</div>
+</div>
+
+<div class="side_span">
+	<div class='header'>
+		<span class='col_fade'>友情社区</span>
+	</div>
+	<div class='inner'>
+		<a href='http://nodejs.org'><img src='/img/nodejsorg.png'/></a>
+	</div>
+</div>

@@ -13,6 +13,7 @@ var JobSchema = new Schema({
 	number:{ type: Number, default: 0 },//招收人数
 	click_count:{ type: Number, default: 0 },//点击数
 	ask_count:{ type: Number, default: 0 },//申请数量
+	coment_count:{ type: Number, default: 0 },//申请数量
 
 	create_at: { type: Date, default: Date.now },
   	update_at: { type: Date, default: Date.now }

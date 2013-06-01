@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	
+	<title><%= title %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<!--css-->
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/css/bootstrap-responsive.min.css' />
+
+<style>
+	
+</style>
+
+</head>
+<body>
+	<div class="navbar" id='navbar'><!-- navbar-fixed-top -->
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="brand" href="/">乐享</a> 
+				
+				<% if(user){ %>
+				<div class="btn-group pull-right">	
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-user"></i> 用户名 <span
+						class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/user/<%=user._id%>"><i class="icon-user"></i> 我的主页</a></li>
+						<li><a href="/messages"><i class="icon-envelope"></i> 我的消息</a></li>
+						<li><a href="/folders/edit"><i class="icon-folder-close"></i> 我的文件夹</a></li>
+						<li class="divider"></li>
+						<li><a href="/pwd"><i class="icon-chevron-right"></i>  修改密码</a></li>
+						<li><a href="/avatar"><i class="icon-chevron-right"></i>  修改头像</a></li>
+						<li class="divider"></li>
+						<li><a href="/signout"><i class="icon-off"></i> 退出登录</a></li>
+					</ul>
+				</div>
+				<ul class="nav pull-right">
+		            <li id="message_m"></li>
+		            <li class="divider-vertical"></li>
+		        </ul>
+				<%} else{%>
+				<div class="nav-collapse">
+					<ul class="nav pull-right">
+						<li><a href="/signup">注册</a></li>
+						<li><a href="/signin">登录</a></li>
+					</ul>
+				</div>
+				<%}%>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li><a href="/">首页</a></li>
+						<li><a href="/users">用户</a></li>
+						<li><a href="/files">文件</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="container">
+		<%-body %>
+	</div>
+
+	<script>
+        <% if(user){ %>
+        $.ajax({
+            type : "POST",
+            url : "/messages/unread",
+            success : function(data) {
+                if (data.count == 0) {
+                    $('#message_m').html('');
+                }
+                else {
+                    $('#message_m').html('<a href="/messages"><i class="icon-envelope icon-white"></i> 新消息(' + data.count + ')</a>');
+                }
+            },
+            error : function() {
+                $('#message_m').html('');
+            }
+        });
+        <%}%>
+    </script>
+
+	<hr/>
+	<!-- footer -->
+	<div id='footer'>
+		<div id='footer_main'>
+			<div class='fr'></div>
+			<div>
+				<strong><a class='dark' href='#'>关于</a></strong>
+				&nbsp;&nbsp;|&nbsp;&nbsp; <strong><a class='dark' href='#'>反馈</a></strong>
+				&nbsp;&nbsp;|&nbsp;&nbsp; <strong><a class='dark' href='#'>©2012
+						Sumory</a></strong> &nbsp;&nbsp;|&nbsp;&nbsp; <strong><a class='dark'
+					href='#'>版本: <%= config.version %></a></strong>
+			</div>
+			<div class='sep10'></div>
+		</div>
+	</div>
+	<a href="#navbar" id="totop"></a>
+</body>
+</html>
