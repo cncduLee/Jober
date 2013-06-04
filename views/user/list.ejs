@@ -16,12 +16,16 @@
 
           <span class='user_name'><a class='dark' href='/u/<%= user._id %>'><%= user.name %></a></span>
 
+          <a class="count fr" href="/msg/sendto/<%= user._id %>">
+          
+          <i class="icon-envelope icon-white"></i>私信</a>
+
           <div class='sep5'></div>
 
           <span class='col_fade'>
-          文章数: <a href='/<%=user._id%>/articles'>22</a>&nbsp;&nbsp;&nbsp;&nbsp;
-          粉丝: <a href='/<%=user._id%>/follower'>11</a>&nbsp;&nbsp;&nbsp;&nbsp;
-          关注: <a href='/<%=user._id%>/following'>33</a>
+          粉丝: <a href='/<%=user._id%>/follower'><%=user.following_count%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+          关注: <a href='/<%=user._id%>/following'><%=user.followed_count%></a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           创建于：<%=user.friend_create_at%>
           </span>
       </div>  

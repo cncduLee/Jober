@@ -1,0 +1,24 @@
+
+<div class='cell message' message_id='<%= message.id %>'>
+
+	<% if(message.type == 'user'){ %>
+	<span>
+		<a href='/u/<%= message.author_id %>' target='_blank'><%=message.author.name%></a> 
+		私信你说： 
+		<a ><%= message.content %></a>
+	</span>
+		<% if(!message.has_read){ %>
+		<a href="/msg/sendto/<%=message.author_id %>">
+	      <span class="badge badge-warning">回复</span>
+	    </a>
+	<% }} %>
+
+	<% if(message.type == 'sys'){ %>
+	<span>
+		系统消息：
+		<a ><%= message.content %></a>
+	</span>
+	<% } %>
+
+	<span class='fr' style="color:#ccc"><%=message.at%></span>
+</div>

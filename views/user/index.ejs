@@ -24,7 +24,49 @@
       <% }) %>
   </div>
 
+
+<% if(user){if(user._id == currentUser._id){%>
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'><i class="icon-time"></i><%=currentUser.name%>的求职</span>
+    </div>
+      <% resumes.forEach(function(resume,index){%>
+        <div class='cell'>
+                  <a> <%=resume.title %></a>
+                  
+                  
+                    <a class="count fr" href="/msg/sendto/<%= resume.author_from %>">
+                    <i class="icon-envelope icon-white"></i>回复私信</a>
+
+                  <div class="sep10"></div>
+                  <p><strong>求职理由：</strong> <%=resume.content%> </p>
+                  <div class="sep10"></div>
+
+                  <a href="/resume/ <%=resume._id %> ">查看详情 &raquo;</a>
+        </div> 
+      <% }) %>
+  </div>
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'><i class="icon-time"></i><%=currentUser.name%>收到求职</span>
+    </div>
+      <% provids.forEach(function(resume,index){%>
+        <div class='cell'>
+                  <a> <%=resume.title %></a>
+                  <a class="count fr" href="/msg/sendto/<%= resume.author_from %>">
+                  <i class="icon-envelope icon-white"></i>回复私信</a>
+                  <div class="sep10"></div>
+                  <p><strong>求职理由：</strong> <%=resume.content%> </p>
+                  <div class="sep10"></div>
+
+                  <a href="/resume/ <%=resume._id %> ">查看详情 &raquo;</a>
+        </div> 
+      <% }) %>
+  </div>
+  <%}}%>
 </div>
+
+                    
 
 <div class="side_span">
   <% if(user){if(user._id == currentUser._id){%>
@@ -49,8 +91,12 @@
   <%}else{%>
     <div class='header'>
       <span class='col_fade'>和他/她建立联系</span>
+      <a class="count fr" href="/msg/sendto/<%= currentUser._id %>">
+          <i class="icon-envelope icon-white"></i>私信
+      </a>
     </div>
     <div class="inner textCenter">
+      
       <%if(relation != null){%>
         <a href="/u/unfollow/<%=currentUser._id%>" class="btn btn-info"><i class="icon-pencil icon-white"></i>取消关注</a>
       <%}else{%>

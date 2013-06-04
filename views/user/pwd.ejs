@@ -1,0 +1,40 @@
+<div id='message_mmmm'></div>
+<div class="main-body">
+		<div class='panel'>
+			
+			<div class='header'>
+				<span class='col_fade'>修改密码</span>
+			</div>
+			<div class='inner'>
+			<form class="form-signin" id="pwdForm" method="post" action="/pwd">
+		       
+		        旧密码：<input type="password" class="input-block-level" name="old_pwd" placeholder="Password" required=true>
+		        新密码：<input type="password" class="input-block-level" name="new_pwd" placeholder="RePassword" required=true>   
+		        <input type="submit" id="submit_pwd_update" style="display:none;"/>	
+		        <a onclick="pwdUpdate()" href='javascript:void(0)' class="btn btn-info" >确认</a>
+		    </form>
+
+
+
+				<script type="text/javascript" src="/libs/jquery/jquery.form.js"></script>
+				<script>
+					$('#pwdForm').ajaxForm({
+					    complete : function(xhr) {
+					        var data = xhr.responseText;
+					        data = eval("(" + data + ")");
+					         if (data.type=='success') {
+					           $('#message_mmmm').append('<div class=\'alert alert-success\'>'+data.message+'</div>');
+					        }
+					        else {
+					        $('#message_mmmm').append('<div class=\'alert alert-error\'>		 '+data.message+'</div>');
+					        }
+					    }
+					});
+
+					function pwdUpdate(){
+						$('#submit_pwd_update').click();
+					}
+				</script>
+    		</div>  	
+	</div>  	
+</div>      

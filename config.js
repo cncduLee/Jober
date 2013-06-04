@@ -7,6 +7,7 @@ module.exports = {
 	auth_cookie: 'lee-cookies',
 	db:'mongodb://127.0.0.1/fanger',
 	host:'localhost',
+	page_size:10,
 	rss:{
 		    title: '成都大学多问专业中文社区（Nodejs版）',
 		    link: 'http://cnodejs.org',

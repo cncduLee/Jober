@@ -1,0 +1,94 @@
+<div id='message_mmmm'></div>
+<div class="main-body">
+		<div class='panel'>
+			<div class='header'>
+				<span class='col_fade'>修改头像</span>
+			</div>
+			<div class='inner'>
+				<form class='form-horizontal' style="margin-top:20px;">
+						<div class="control-group">
+							<label class="control-label">当前头像</label>
+							<div class="controls">
+								<img id='current_avatar' style='padding:4px;width:70px;border:1px solid #eee' src='<%=user.avatar_url%>'/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">选择文件</label>
+							<div class="controls">
+								<a onclick="chooseAvatar()" href='javascript:void(0)' class="btn btn-info">选择文件</a>
+								<a id="link_upload_file" onclick="uploadAvatar()" href='javascript:void(0)' class="btn btn-info" style="display:none;"'>上传</a>
+								<div style="height:15px;width:100px;"></div>
+								<span  class="label label-info" id="file_name_span">提示信息</span>
+							</div>
+						</div>
+				</form>
+
+				<form id="avatarForm" action="/upload/file" method="post" target="hidden_frame" enctype="multipart/form-data" style="visibility:hidden;">
+					<input type="file" name="doc_upload" onchange="changeFileChoose(this);" />
+					<input type="submit" id="upload_submit_button"/>
+				</form>
+				<!-- 隐藏提交iframe -->
+				<iframe name="hidden_frame" id="hidden_frame" style="display:none"></iframe>
+
+
+				<form id="avatarUrlForm" action="/avatar" method="post" target="hidden_frame_2" enctype="multipart/form-data" style="visibility:hidden;">
+					<input type="hiden" name="avatar_url" id="avatar_url_input"/>
+					<input type="submit" id="url_upload_submit_button"/>
+				</form>
+				<!-- 隐藏提交iframe -->
+				<iframe name="hidden_frame_2" id="hidden_frame_2" style="display:none"></iframe>
+
+
+				<script type="text/javascript" src="/libs/jquery/jquery.form.js"></script>
+				<script>
+					$('#avatarForm').ajaxForm({
+					    complete : function(xhr) {
+					        var data = xhr.responseText;
+					        data = eval("(" + data + ")");
+					        if (data.status=='success') {
+					            $('#file_name_span').html($('#file_name_span').text()+":上传成功");
+					            $('#current_avatar').attr('src', data.url);
+					            
+					            $('#avatar_url_input').val(data.url);
+					            $('#url_upload_submit_button').click();
+					        }
+					        else {
+					            alert('头像上传失败');
+					        }
+					    }
+					});
+
+					
+					$('#avatarUrlForm').ajaxForm({
+					    complete : function(xhr) {
+					        var data = xhr.responseText;
+					        data = eval("(" + data + ")");
+					        if (data.type=='success') {
+					           $('#message_mmmm').append('<div class=\'alert alert-success\'>更新成功！</div>');
+					        }
+					        else {
+					        $('#message_mmmm').append('<div class=\'alert alert-error\'>头像更新失败了！</div>');
+					        }
+					    }
+					});					
+					
+				    function chooseAvatar() {
+				        $("input[name='doc_upload']").click();
+				        $('#link_upload_file').show();
+				    }
+				    
+				    function changeFileChoose(obj){		
+				        $('#link_upload_file').show();
+						$('#file_name_span').html(obj.value);
+					}
+				    
+				    function uploadAvatar(obj){
+				        $('#link_upload_file').hide();
+				        $('#upload_submit_button').click();
+				    }
+				    
+				    
+				</script>
+			</div>
+		</div>
+</div>

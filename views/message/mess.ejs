@@ -1,0 +1,48 @@
+<div id='message_mmmm'></div>
+<div class="main-body">
+		<div class='panel'>
+			
+			<div class='header'>
+				<i class="icon-envelope icon-white"></i>
+				<span class='col_fade'>发消息</span>
+			</div>
+			<div class='inner'>
+			<form class="form-signin" id="msgForm" method="post" action="/msg/sendto/post">
+		       
+		       <input type="hidden" id="sendto_id" name="sendto_id" value="<%= sendtoid %>"></input>
+		        
+		        <div class='input'>
+	              <textarea name='content' rows='5' style='width: 700px; height: auto;'>
+	              </textarea>
+	            </div>
+		        
+
+		        <input type="submit" id="submit_msg" style="display:none;"/>	
+		        <a onclick="submitmsg()" href='javascript:void(0)' class="btn btn-info" >确认</a>
+		    </form>
+
+
+
+				<script type="text/javascript" src="/libs/jquery/jquery.form.js"></script>
+				<script>
+					$('#msgForm').ajaxForm({
+					    complete : function(xhr) {
+					        var data = xhr.responseText;
+					        data = eval("(" + data + ")");
+					         if (data.type=='success') {
+					           $('#message_mmmm').append('<div class=\'alert alert-success\'>'+data.message+'</div>');
+					        }
+					        else {
+					        $('#message_mmmm').append('<div class=\'alert alert-error\'>		 '+data.message+'</div>');
+					        }
+					    }
+					});
+
+					function submitmsg(){
+						alert($('#sendto_id').val() + '======');
+						$('#submit_msg').click();
+					}
+				</script>
+    		</div>  	
+	</div>  	
+</div>      
