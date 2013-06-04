@@ -24,7 +24,7 @@ JobDao.getJobs(function(err,jobs){
   proxy.after('jobs',jobs.length,function(list){
       //===成功！
       res.render('index', { 
-        title: '用户列表——乐享',
+        title: '用户列表',
         layout:'default',
         jobs: list
       });     

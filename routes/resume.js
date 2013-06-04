@@ -12,7 +12,7 @@ exports.post = function(req,res,next){
 	var id = trim(req.params.jobid);
 	var render = function(job,author_to){
 		res.render("resume/postResume",{
-			title:"投递简历-乐享",
+			title:"投递简历",
 			layout:'default',
 			job:job,
 			author_to:author_to
@@ -37,7 +37,6 @@ exports.post = function(req,res,next){
 };
 
 exports.online = function(req,res,next){
-	
 	//2、验证
 	//....
 	//3、添加数据
@@ -75,9 +74,6 @@ exports.online = function(req,res,next){
 
 exports.offline = function(req,res,next){
 	var resume = getResume(req,'off');
-	
-
-	var resume = getResume(req,'on');
 	//1、用户是否登录
 	if(!req.session.user){
 		req.flash('error','您还未登录！');
@@ -121,14 +117,14 @@ function getResume(req,type){
 	resume.job_id = req.body['job_id'];
 
 	//========离线========//
-	if(type == 'on'){
-		resume.type = 'on';
+	if(type == 'off'){
+		resume.type = 'off';
 		resume.resume_file = req.body['resume_file'];
 	}
 
 	//========在线========//
-	if(type == 'off'){
-		resume.type = 'off';
+	if(type == 'on'){
+		resume.type = 'on';
 		resume.name = req.body['name'];
 		resume.email = req.body['email'];
 		resume.phoneNo = req.body['phoneNo'];
@@ -136,7 +132,8 @@ function getResume(req,type){
 		resume.work_history = req.body['work_history'];
 		resume.edu_backend = req.body['edu_backend'];
 	}
-	
+
+
 	return resume;	
 }
 

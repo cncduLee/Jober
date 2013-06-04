@@ -1,8 +1,15 @@
 var EventProxy = require('eventproxy');
 
+var fs = require('fs');
+var path = require('path');
+var ndir = require('ndir');
+var config = require('../config');
+
 var UserDao = require('../service').UserDao;
 var JobDao = require('../service').JobDao;
 var RelationDao = require('../service').RelationDao;
+var ResumeDao = require('../service').ResumeDao;
+
 var Util = require('../service/util');
 
 exports.users = function(req, res , next){
@@ -12,14 +19,15 @@ exports.users = function(req, res , next){
     proxy.fail(next);
 
 	UserDao.getUsersByQuery({},{limit:10},function(err,users){
-
 		for(var a = 0 ; a < users.length ; a++){
 			
 			UserDao.getUserById(users[a]._id,function(err,user){
-				
+				//时间处理
 				user.friend_create_at = Util.format_date(user.create_at, true);
 				proxy.emit('users',user);
+				
 			});
+
 		}
 
 		proxy.after('users', users.length, function (list) {
@@ -38,7 +46,7 @@ exports.user = function(req, res , next){
 
 	var user_id = trim(req.params.id);
 
-	var render = function(currentUser,jobs,follows,relation){
+	var render = function(currentUser,jobs,follows,relation,provids,resumes){
 		
 		//===成功！
 		res.render('user/index', { 
@@ -47,13 +55,15 @@ exports.user = function(req, res , next){
 			currentUser:currentUser,
 			jobs: jobs,
 			follows:follows,
-			relation:relation
+			relation:relation,
+			provids:provids,
+			resumes:resumes
 		});	  		
 	}
 
 	var proxy = new EventProxy();
 
-    proxy.assign('currentUser', 'jobs','follows','relation', render);
+    proxy.assign('currentUser', 'jobs','follows','relation','provids','resumes', render);
     proxy.fail(next);
 
 	UserDao.getUserById(user_id,proxy.done('currentUser'));
@@ -71,6 +81,10 @@ exports.user = function(req, res , next){
     } else {
       RelationDao.getRelation(user_id,req.session.user._id, proxy.done('relation'));
     }
+
+    ResumeDao.getResumesByprovider(user_id,proxy.done('provids'));
+    ResumeDao.getResumesByAuthor(user_id,proxy.done('resumes'));
+
 };
 
 exports.follow = function(req,res,next){
@@ -219,6 +233,107 @@ exports.doLogin = function(req, res,next){
 
 	});
 };
+
+/*改密页*/
+exports.pwd_s = function(req,res,next){
+	if(!req.session.user){
+		req.flash('error','改密请先登录！')
+		return res.redirect('/login');
+	}
+
+	res.render('user/pwd',{
+		title: '改密',
+		layout:'default'
+	});
+};
+/*改头像*/
+exports.avatar_s = function(req,res,next){
+	if(!req.session.user){
+		req.flash('error','改密请先登录！')
+		return res.redirect('/login');
+	}
+
+	res.render('user/avatar',{
+		title: '改头像',
+		layout:'default'
+	});
+};
+
+/*改头像*/
+exports.avatar = function(req,res,next){
+	
+	var result = {
+		type : 'error',
+		message : ''
+	};
+	
+	//必须先登录
+	if(!req.session.user){
+		req.flash('error','改密请先登录！')
+		return res.redirect('/login');
+	}
+
+	var avatar_url = req.body['avatar_url'];
+
+	if(!avatar_url){
+			result.type = 'error';
+			result.message = '头像文件更新失败！';
+			res.jsonp(result);
+	}
+	
+	//后台验证
+	UserDao.updateAvatar(req.session.user._id,avatar_url,function(err,user){
+			if(!err && user != null){
+				req.session.user = user;
+				result.type = 'success';
+				result.message = '头像更新成功！';
+			}else{
+				result.type = 'error';
+				result.message = '头像更新失败！' + err;
+			}
+			res.jsonp(result);
+	});		
+
+		
+};
+
+/*改密*/
+exports.pwd = function(req,res,next){
+	
+	var old_pwd = req.body['old_pwd'];
+	var new_pwd = req.body['new_pwd'];
+
+	var result = {
+		type : 'error',
+		message : ''
+	};
+
+	//必须先登录
+	if(!req.session.user){
+		req.flash('error','改密请先登录！')
+		return res.redirect('/login');
+	}
+
+	if(old_pwd === new_pwd){
+		result.type = 'error';
+		result.message = '旧密码必须与新密码不一致！' ;
+		return res.jsonp(result);
+	}
+
+	//后台验证
+	UserDao.updatePwd(req.session.user._id,new_pwd,function(err,user){
+		if(!err && user != null){
+			req.session.user = user;
+			result.type = 'success';
+			result.message = '密码更新成功！';
+		}else{
+			result.type = 'error';
+			result.message = '密码更新失败！' + err;
+		}
+		res.jsonp(result);
+	});	
+};
+
 
 exports.ajaxLogin = function(req, res,next){
 	var result = {
