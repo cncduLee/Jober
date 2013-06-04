@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var ComentSchema = new Schema({
+	
 	content: { type: String },
 	job_id: { type: ObjectId, index: true },
 
@@ -12,6 +13,7 @@ var ComentSchema = new Schema({
 	create_at: { type: Date, default: Date.now },
 	update_at: { type: Date, default: Date.now },
 	content_is_html: { type: Boolean }//是否是html
+	
 });
 
 mongoose.model('Coment', ComentSchema);
