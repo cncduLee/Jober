@@ -1,7 +1,7 @@
 var EventProxy = require('eventproxy');
-var UserDao = require('../service/user');
-var JobDao = require('../service/job');
-var ResumeDao = require('../service/resume');
+var UserDao = require('../service/').UserDao;
+var JobDao = require('../service/').JobDao;
+var ResumeDao = require('../service/').ResumeDao;
 
 var models = require('../models');
 var Resume = models.Resume;
@@ -9,6 +9,11 @@ var Resume = models.Resume;
 
 
 exports.post = function(req,res,next){
+	//1、用户是否登录
+	if(!req.session.user){
+		req.flash('error','您还未登录！');
+		return res.redirect('/login');
+	}
 	var id = trim(req.params.jobid);
 	var render = function(job,author_to){
 		res.render("resume/postResume",{
@@ -37,6 +42,11 @@ exports.post = function(req,res,next){
 };
 
 exports.online = function(req,res,next){
+	//1、用户是否登录
+	if(!req.session.user){
+		req.flash('error','您还未登录！');
+		return res.redirect('/login');
+	}
 	//2、验证
 	//....
 	//3、添加数据

@@ -1,0 +1,14 @@
+--- 
+applications: 
+- name: Jober
+  framework: node
+  runtime: node08
+  memory: 512M
+  instances: 1
+  url: Jober.${target-base}
+  path: .
+  services: 
+    jober_mongdb: 
+      vendor: mongodb
+      version: "2.0"
+      tier: free
