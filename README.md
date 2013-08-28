@@ -30,6 +30,27 @@ interface
 	* app.get('/rest/jobs/provide/:uid',rest_job.getSelfJobs);
 	* app.get('/rest/jobs/ask/:uid',rest_job.getAskJobs);
 	* app.get('/rest/msgs/:uid',rest_msg.msglist);
-	* app.get('/rest/resume/:uid',rest_resume.getResume);	
+	* app.get('/rest/resume/:uid',rest_resume.getResume);
+
+
+showcase
+---
+> page1
+
+![DataV logo](https://raw.github.com/cncduLee/Jober/master/pic/pic1.png)
+
+> page2
+
+![DataV logo](https://raw.github.com/cncduLee/Jober/master/pic/pic2.png)
+
+> page3
+
+![DataV logo](https://raw.github.com/cncduLee/Jober/master/pic/pic3.png)
+
+> page4
+
+![DataV logo](https://raw.github.com/cncduLee/Jober/master/pic/pic4.png)
+
+
 
 
